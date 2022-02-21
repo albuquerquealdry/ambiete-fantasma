@@ -1,4 +1,8 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/xenial64"
   config.vm.network "public_network"
-end
+  config.vm.provision "docker" do |d|    
+   d.pull_images "mongo"
+  config.vm.provision "shell", inline:  "docker run --name mongodb -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=admin mongo"
+   end
+ end
